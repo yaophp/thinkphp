@@ -1,0 +1,54 @@
+/*
+*///////////////////////////////////////////////////////////////
+*
+*          ThinkPHP 3.2.3修改记录
+*
+* 因为ThinkPHP  V5.0+ 和 V3.2+ 的决然不同，所以3.2.3 是稳定的绝更版（不用担心官方更新升级覆盖）
+* 也就是说放心大胆的去改吧，反正也有修改记录
+*
+* 修改格式：
+* # 修改说明
+* 行号L  文件（主目录是ThinkPHP目录）
+* 
+*///////////////////////////////////////////////////////////////
+*/
+
+# 修复 CONF_PATH （官方文档有，但是代码里没有，不知是弃用还是忘记）
+L55	ThinkPHP.php   
+
+
+# 增加 统一在Common/config.php 设置  'TMPL_PARSE_STRING' 一次，全模块通用的功能
+L40	/Library/Behavior/ContentReplaceBehavior.class.php   
+
+
+# 修复 Auth.class.php 在配置文件的 表前缀 写死 的 bug
+L82	/Library/Think/Auth.class.php
+
+
+==================暂时回滚================# 禁止模型的create方法 默认自动接收 post 的主键值
+============================L1005	/Library/Think/Model.class.php
+
+
+# 修改 消息头header 的 X-Powered-By:"ThinkPHP" 
+L92	/Library/Think/View.class.php
+
+# 修改 Thinkphp Exception 的处理 ，因为若指定“ERROR_PAGE”，Thinkphp开发模式是404,部署模式是redirect（302+200）不利于优化SEO
+先在项目Common/Conf/config.php中新增 “ERROR_PAGE_404" 以区分
+L303	/Library/Think/Think.class.php
+
+# 修复 Page 中输入页码比实际情况总页面多的情况。（Thinkphp页码处理，但内容没处理$this->firstRow   = $this->listRows * ($this->nowPage - 1);）
+L86	/Library/Think/Page.class.php
+
+# 修复 Thinkphp的memcached驱动关于0永久缓存无效的BUG
+L70	/Library/Think/cache/memcached.class.php
+
+# 修改 Thinkphp新建项目时发送的统计请求
+L22	/Library/Think/Build.class.php
+
+# 修复 Thinkphp的session存进mysql的mysqli驱动的错误问题
+L81 	/Library/Think/Session/Driver/Mysqli.class.php
+L100
+
+# 修改 Thinkphp的默认时区为Asia/Hong_Kong
+
+# 修改 Thinkphp的logo函数返回值
