@@ -23,7 +23,7 @@ namespace Think\Session\Driver;
  *      UNIQUE KEY `session_id` (`session_id`)
  *    );
  */
-class YaoMysqli extends Mysqli {
+class Yaomysqli extends Mysqli {
 
     /**
      * Session有效时间
@@ -49,12 +49,14 @@ class YaoMysqli extends Mysqli {
     public function open($savePath, $sessName) {
         $this->lifeTime = C('SESSION_EXPIRE') ? C('SESSION_EXPIRE') : ini_get('session.gc_maxlifetime');
         $this->sessionTable = C('SESSION_TABLE') ? C('SESSION_TABLE') : C("DB_PREFIX") . "session";
-        if(!empty(C('SESSION_HOST'))){
-            $host = explode(',', C('SESSION_HOST.DB_HOST'));
-            $port = explode(',', C('SESSION_HOST.DB_PORT'));
-            $name = explode(',', C('SESSION_HOST.DB_NAME'));
-            $user = explode(',', C('SESSION_HOST.DB_USER'));
-            $pwd = explode(',', C('SESSION_HOST.DB_PWD'));
+        $SESSION_HOST = C('SESSION_HOST');
+        if(!empty($SESSION_HOST)){
+//            session独立管理，同样可以支持分布式
+            $host = explode(',', $SESSION_HOST['DB_HOST']);
+            $port = explode(',', $SESSION_HOST['DB_PORT']);
+            $name = explode(',', $SESSION_HOST['DB_NAME']);
+            $user = explode(',', $SESSION_HOST['DB_USER']);
+            $pwd = explode(',', $SESSION_HOST['DB_PWD']);
         }else{
              //分布式数据库
             $host = explode(',', C('DB_HOST'));
